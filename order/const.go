@@ -1,6 +1,4 @@
-package github.com/agentnemo00/kigo-core
-
-// Messages send to the modules.
+package order
 
 const (
 	// Basic orders from the main service to the modules
@@ -10,26 +8,3 @@ const (
 	OrderUpdate  	= "OrderUpdate" // called to update the module, i.e. update data or state
 	OrderRender  	= "OrderRender" // called to render the module, i.e. draw the module on the output
 )
-
-type Order struct {
-	From 	string
-	To 		string
-	Order 	string
-	Payload any
-}
-
-// Payloads for orders
-
-type OrderStartUpPayload struct {
-	QueuePosition int // Position of the module
-}
-
-type OrderRenderPayload struct {
-	SizeX int // size of the output to render on
-	SizeY int // size of the output to render on
-}
-
-type OrderUpdatePayload struct {
-	Order string  	// detailed order
-	OrderValue any 	// order value
-}
