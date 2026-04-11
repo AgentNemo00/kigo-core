@@ -14,18 +14,18 @@ type Notification struct {
 }
 
 type NotificationReadyPayload struct {
-	Duration time.Duration // Duration needed to be ready, when should order startup be called
+	Duration 		time.Duration // Duration needed to be ready, when should order startup be called
 	CallingInterval time.Duration // Interval in which the module should be updated without beeing called directly  TODO: needed ?
 }
 
 type NotificationUpdatePayload struct {
-	Duration time.Duration // Duration needed to update, when should notification render be called
+	Duration 	time.Duration // Duration needed to update, when should notification render be called
 }
 
 type NotificationRenderPayload struct {
 	// where to render
-	PositionX int
-	PositionY int
+	PositionX 	int
+	PositionY 	int
 
-	Payload string	// what to render in JSON format
+	Payload 	string	// what to render in JSON format
 }

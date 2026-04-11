@@ -22,5 +22,5 @@ type OrderRenderPayload struct {
 
 type OrderUpdatePayload struct {
 	Order 		string  	// detailed order
-	OrderValue string 	// order value or information, e.g. what to update, in JSON format
+	OrderValue 	string 	// order value or information, e.g. what to update, in JSON format
 }
