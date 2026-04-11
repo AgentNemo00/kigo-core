@@ -27,6 +27,5 @@ type NotificationRenderPayload struct {
 	PositionX int
 	PositionY int
 
-	Object []byte // object to render
-	Path string // path to the object to render, if object is empty, path should be used
+	Payload string	// what to render in JSON format
 }
