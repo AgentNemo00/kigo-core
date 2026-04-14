@@ -8,4 +8,3 @@ const (
 	OrderUpdate  	= "OrderUpdate" // called to update the module, i.e. update data or state
 	OrderRender  	= "OrderRender" // called to render the module, i.e. draw the module on the output
 )
-
