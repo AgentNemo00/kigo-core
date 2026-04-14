@@ -17,6 +17,10 @@ type OrderStartUpPayload struct {
 	RenderTo 					string // ID to publish render to ; should be one of the render wating routines
 }
 
+type OrderRebootPayload struct {
+	Error 	string  // error that caused the reboot, if any
+}
+
 type OrderRenderPayload struct {
 	SizeX int // size of the output to render on
 	SizeY int // size of the output to render on

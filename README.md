@@ -6,7 +6,7 @@ Pubsub shema. There is no constrains who can call them. Simple rules are, KiGo c
 
 Orders are messages sended by KiGo and modules to the modules. The modules should react to them.
 
-- `OrderStartUp` is called after receiving the notification `NotificationReady` from the module 
+- `OrderStartUp` is called after receiving the notification `NotificationReady` from the module and gives the module basic information about the current state of KiGo
 - `OrderShutdown` is called to shutdown the module. i.e. when the amounts of reboots exceed the maximal amount of reboots allowed. Module is removed completly and needs to do the startup procedure again.
 - `OrderReboot` is called when an error occurs on the KiGo side which is caused by the module.
 - `OrderUpdate` is called to trigger an update on the module which should cause a update of the interal module state.

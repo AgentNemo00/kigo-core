@@ -17,7 +17,8 @@ type Notification struct {
 type NotificationReadyPayload struct {
 	Duration 		time.Duration // Duration needed to be ready, when should order startup be called
 	CallingInterval time.Duration // Interval in which the module should be updated without beeing called directly ; polling mode
-	Changes 		[]string // Does the module have changes to update, if false, the module will not be called for update, but only for render
+	Changes 		[]string // Allowed changes to the module, e.g. change format
+	
 }
 
 type NotificationUpdatePayload struct {
