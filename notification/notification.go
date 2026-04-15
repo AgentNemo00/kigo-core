@@ -16,19 +16,10 @@ type Notification struct {
 
 type NotificationReadyPayload struct {
 	Duration 		time.Duration // Duration needed to be ready, when should order startup be called
-	CallingInterval time.Duration // Interval in which the module should be updated without beeing called directly ; polling mode
-	Changes 		[]string // Allowed changes to the module, e.g. change format
-	
+	Name 			string // Human readable name of the module, for debugging and logging purposes
+	Changes         []string // List of changes that the module has, e.g. update, render, etc. For debugging and logging purposes
 }
 
 type NotificationUpdatePayload struct {
-	Payload 	int // what should be updated
-}
-
-type NotificationRenderPayload struct {
-	// where to render
-	PositionX 	int
-	PositionY 	int
-
-	Payload 	string	// mmap name
+	Type 	int 
 }

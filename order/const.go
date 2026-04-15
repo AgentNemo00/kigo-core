@@ -3,8 +3,8 @@ package order
 const (
 	// Basic orders from the main service to the modules
 	OrderStartUp 	= "OrderStartUp" // called during startup procedore, after configuration is readed
-	OrderShutdown 	= "OrderShutdown" // called to shutdown the module, i.e. idle mode 
-	OrderReboot  	= "OrderReboot" // called to reboot the module, i.e. unexpected error or response
-	OrderUpdate  	= "OrderUpdate" // called to update the module, i.e. update data or state
-	OrderRender  	= "OrderRender" // called to render the module, i.e. draw the module on the output
+	OrderError		= "OrderError" // called to report an error to the module, e.g. when a module is not responding or has an unexpected response
+	OrderInformation = "OrderInformation" // called to request information from the module, e.g. when a module is not responding or has an unexpected response
+	OrderChange		= "OrderChange" // called to update the module, e.g. when a module has an update to share, Publish to main
+	OrderShutdown		= "OrderShutdown" // called to shutdown the module, e.g. when the main service is shutting down, Publish to main
 )

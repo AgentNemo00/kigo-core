@@ -1,7 +1,7 @@
 package information
 
 const (
-	ModulesInformation = 1
+	ModulesInformation = 0
 )
 
 type ModulesInformationPayload struct {
