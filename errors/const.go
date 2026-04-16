@@ -5,5 +5,6 @@ const (
 	NotificationTypeInvalid
 	NotificationPayloadInvalid
 	KiGoIDInvalid
+	ModuleNotFound
 	Unsupported
 )
