@@ -1,8 +1,9 @@
 package errors
 
 const (
-	NotReady = iota
-	PayloadInvalid
-	TypeInvalid
+	KiGoNotReady = iota
+	NotificationTypeInvalid
+	NotificationPayloadInvalid
+	KiGoIDInvalid
 	Unsupported
 )
