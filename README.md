@@ -1,8 +1,10 @@
 # kigo-core
 
-Pubsub shema. There is no constrains who can call them. Simple rules are, KiGo calls only `Oders`.
+Pubsub shema for communication with `KiGo` and `KiGoUI`.
 
-## Orders
+## Communication
+
+### Orders
 
 Orders are messages sended by KiGo and modules to the modules. The modules should react to them.
 
@@ -12,26 +14,38 @@ Orders are messages sended by KiGo and modules to the modules. The modules shoul
 - `OrderChange` is called when an update is send to change the module
 - `OrderShutdown` should free up the resources and shutdown
 
-## Notifications
+### Notifications
 
-Notification are messages sended by the modules to KiGo. KiGo should react to them.
+Notification are messages sended by the modules to `KiGo`.
 
 - `NotificationReady` is called when the module is ready to communicate
-- `NotificationUpdate` is called when an update of informations is wanted   
+- `NotificationInformation` is called when an information is required
+- `NotificationUpdate` is called when an update is happened
 
-### NotificationUpdate
+- `NotificationRender` is called to render. Send to `KiGoUI`
 
-Currently there are two update reasons:
-- `ModulesInformation` is 0
+#### NotificationUpdate
 
-## Informations
+Currently reasons for an update:
+- `Config` is 0 - change module configuration
+
+### Informations
 
 Informations are message which can be sended to modules to give them informations. They to not expect a reaction and are also attached to `OrderInformation`.
+Currently reasons for an update:
+- `Modules` is 0 - receive all modules information
+- `Module` is 1 - receive information about the module with the given name or ID
 
-## Changes
+### Changes
 
 Changes are messages which can be sended to modules to change the internal status. They are attached to `OrderChanges`. They cause a change in the state of the module which causes a redraw.
 
+## KiGoUI
+
+Communication with `KiGoUI` is also via pubsub. `KiGoUI` is sharing with `KiGo` a list of `ModuleInformation`. `NotificationRender` is send to `KiGoUI`
+
 ## Module lifecycle
 
-TBD
+Modules are in a initiating period before they send `NotificationReady`. They can choose a heartbeat which is smaller than 24 hours or leave it empty. If empty skip everything, we assume a module which do not draw anything to `KiGoUI`
+`KiGo` response with `OrderStartUp`. From this point on a constant heartbeat is been send to make sure the module is still alive. `KiGo`and `KiGoUI` share the module informations. The heartbeat is responded by initiating communication with `KiGo` or `KiGoUI`. If the heartbeat is not responded a `OrderShutdown` is been called and, if the module has drawn, the widget of the module is been removed.
+`KiGo` accepts `NotificationInformation` and `NotificationUpdate`. `KiGoUI` accepts `NotificationRender`. The loop of heartbeat required the module to do anything, may it be to render something or any logic, instead of just aquiring resources.

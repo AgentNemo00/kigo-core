@@ -1,7 +1,5 @@
 package order
 
-import "github.com/AgentNemo00/kigo-core/notification"
-
 // Messages send to the modules.
 
 type Order struct {
@@ -14,9 +12,13 @@ type Order struct {
 // Payloads for orders
 
 type OrderStartUpPayload struct {
-	NumberOfModules 			int // number of modules called startup ; incrementing number
-	NotificationTo	 			string // ID to publish notification to ; should be itself
-	RenderTo 					string // ID to publish render to ; should be one of the render wating routines
+	NumberOfModules 		int // number of modules called startup ; incrementing number
+	MessageTo 				MessageTo // where to send the notifications and renders to
+}
+
+type MessageTo struct {
+	Notification	 		string // ID to publish notification to ; should be itself
+	Render					string // ID to publish render to ; should be one of the render wating routines
 }
 
 type OrderErrorPayload struct {
@@ -31,5 +33,9 @@ type OrderInformationPayload struct {
 type OrderChangePayload struct {
 	Type 				string 
 	Payload 			any
+}
+
+type OrderShutdownPayload struct {
+	Reason string // reason for shutdown, e.g. when the main service is shutting down, Publish to main
 }
 

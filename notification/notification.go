@@ -18,8 +18,21 @@ type NotificationReadyPayload struct {
 	Duration 		time.Duration // Duration needed to be ready, when should order startup be called
 	Name 			string // Human readable name of the module, for debugging and logging purposes
 	Changes         []string // List of changes that the module has, e.g. update, render, etc. For debugging and logging purposes
+	Heartbeat 		time.Duration // Duration between each heartbeat, for debugging and logging purposes
 }
 
 type NotificationUpdatePayload struct {
 	Type 	int 
+	Payload any
+}
+type NotificationInformationPayload struct {
+	Type 	int 
+	Payload any
+}
+
+type NotificationRenderPayload struct {
+	PositionX 	int
+	PositionY 	int
+
+	Payload string
 }
