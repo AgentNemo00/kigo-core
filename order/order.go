@@ -27,7 +27,6 @@ type OrderErrorPayload struct {
 }
 
 type OrderInformationPayload struct {
-	Type 				int 
 	Payload 			any
 }
 
