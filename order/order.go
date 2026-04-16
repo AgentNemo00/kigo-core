@@ -12,6 +12,7 @@ type Order struct {
 // Payloads for orders
 
 type OrderStartUpPayload struct {
+	ID string
 	NumberOfModules 		int // number of modules called startup ; incrementing number
 	MessageTo 				MessageTo // where to send the notifications and renders to
 }
