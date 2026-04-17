@@ -40,12 +40,14 @@ Currently reasons for an update:
 
 Changes are messages which can be sended to modules to change the internal status. They are attached to `OrderChanges`. They cause a change in the state of the module which causes a redraw.
 
-## KiGoUI
-
-Communication with `KiGoUI` is also via pubsub. `KiGoUI` is sharing with `KiGo` a list of `ModuleInformation`. `NotificationRender` is send to `KiGoUI`
-
 ## Module lifecycle
 
 Modules are in a initiating period before they send `NotificationReady`. They can choose a heartbeat which is smaller than 24 hours or leave it empty. If empty skip everything, we assume a module which do not draw anything to `KiGoUI`
 `KiGo` response with `OrderStartUp`. From this point on a constant heartbeat is been send to make sure the module is still alive. `KiGo`and `KiGoUI` share the module informations. The heartbeat is responded by initiating communication with `KiGo` or `KiGoUI`. If the heartbeat is not responded a `OrderShutdown` is been called and, if the module has drawn, the widget of the module is been removed.
 `KiGo` accepts `NotificationInformation` and `NotificationUpdate`. `KiGoUI` accepts `NotificationRender`. The loop of heartbeat required the module to do anything, may it be to render something or any logic, instead of just aquiring resources.
+
+## KiGoUI - not finished
+
+Modules on the device can communication with `KiGoUI` is via pubsub. This keeps the latence low. Remote devices need to communicate via REST, which is implemented on Phase 5.
+`KiGoUI` is sharing with `KiGo` a list of `ModuleInformation`. `NotificationRender` is send to `KiGoUI`. For the communication with `KiGoUI` we need a number of communications to make sure the module has the exact parameters to create the image which should be render to the screen. `KiGoUI` has the informations about the screen size, the already drawn modules positions, the modules informations and the max supported refresh rate (fps). The modules needs infomationen about the screen size and the max refresh rate. The module provides than the position it should be drawn to, the images at the fps choosen. Drawn is also an update (like calling `NotificationInformation` or `NotificationUpdate`).
+
