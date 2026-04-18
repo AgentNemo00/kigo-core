@@ -15,11 +15,19 @@ type OrderStartUpPayload struct {
 	ID string
 	NumberOfModules 		int // number of modules called startup ; incrementing number
 	MessageTo 				MessageTo // where to send the notifications and renders to
+	UIconfiguration 			UIConfiguration // configuration for the UI, e.g. screen size, etc.
 }
 
 type MessageTo struct {
 	Notification	 		string // ID to publish notification to ; should be itself
 	Render					string // ID to publish render to ; should be one of the render wating routines
+}
+
+type UIConfiguration struct {
+	ScreenWidth 		int
+	ScreenHeight 		int
+	SupportedFormats 	[]string // raw, H264, H265, Jpeg
+	FPS 				int //max supported fps 
 }
 
 type OrderErrorPayload struct {
@@ -38,4 +46,3 @@ type OrderChangePayload struct {
 type OrderShutdownPayload struct {
 	Reason string // reason for shutdown, e.g. when the main service is shutting down, Publish to main
 }
-

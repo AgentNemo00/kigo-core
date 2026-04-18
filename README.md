@@ -51,3 +51,10 @@ Modules are in a initiating period before they send `NotificationReady`. They ca
 Modules on the device can communication with `KiGoUI` is via pubsub. This keeps the latence low. Remote devices need to communicate via REST, which is implemented on Phase 5.
 `KiGoUI` is sharing with `KiGo` a list of `ModuleInformation`. `NotificationRender` is send to `KiGoUI`. For the communication with `KiGoUI` we need a number of communications to make sure the module has the exact parameters to create the image which should be render to the screen. `KiGoUI` has the informations about the screen size, the already drawn modules positions, the modules informations and the max supported refresh rate (fps). The modules needs infomationen about the screen size and the max refresh rate. The module provides than the position it should be drawn to, the images at the fps choosen. Drawn is also an update (like calling `NotificationInformation` or `NotificationUpdate`).
 
+Handshake protocol:
+
+Module -> UI; I want to render on position XY with this size with this FPS.
+UI -> create ringbuffer mmap with space for 2 frames.
+UI -> Module; shares reference about ringbuffer mmap. Refreshes `ModuleInformation`.
+Moudle -> Send frame via ringbuffer until it closes.
+UI -> Draws frame on screen

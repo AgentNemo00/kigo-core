@@ -31,8 +31,9 @@ type NotificationInformationPayload struct {
 }
 
 type NotificationRenderPayload struct {
-	PositionX 	int
-	PositionY 	int
+	PositionX 	int // Position X
+	PositionY 	int // Position Y
 
-	Payload string
+	FPS 		int // FPS choosen
+	Format 		string // Format choosen, e.g. raw, H264, H265, Jpeg
 }
