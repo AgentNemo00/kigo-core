@@ -13,6 +13,7 @@ Orders are messages sended by KiGo and modules to the modules. The modules shoul
 - `OrderInformation` is called when an update is send which contains information about the general system
 - `OrderChange` is called when an update is send to change the module
 - `OrderShutdown` should free up the resources and shutdown
+- `OrderRender` render to the location
 
 ### Notifications
 
@@ -28,11 +29,12 @@ Currently reasons for an update:
 
 ### Inquiries
 
-- `InquiryInformation` is called when an information is required
-- `InquiryRender` is called to render. Send to `KiGoUI`
+- `InquiryInformation` is called when an information is required, responded with `OrderInformation`
+- `InquiryRender` is called to render. Send to `KiGoUI`, responded with `OrderRender`
 
-Informations are message which can be sended to modules to give them knowledge about the system. They to not expect a reaction and are also attached to `OrderInformation`. They are triggered by `InquiryInformations`
-Currently reasons for an update:
+#### InquiryInformations
+
+Currently reasons for an inquiry:
 - `Modules` is 0 - receive all modules information
 - `Module` is 1 - receive information about the module with the given name or ID
 
