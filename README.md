@@ -52,6 +52,6 @@ Modules on the device can communication with `KiGoUI` is via pubsub, this keeps 
 The module has the initial informations about the screen, like width, height, supported formats and max fps which it got from `OrderStartUp`. `InquiryRender` is send to `KiGoUI` in preparation for data transfer. The module gives information about where to draw, the refresh rate and the transfer method. `KiGoUI` sends a trigger to refresh the heartbeat to `KiGo` and creates a ringbuffer for this transmission. The `OrderRender` is send with the location of the ringbuffer. From this point on `KiGoUI` listen to the ringbuffer.
 The module is than sending each frame through the ringbuffer and `KiGoUI` renders it.
 
-![Handshake](kigo_handshake_sequence.svg)
+![Handshake](assets/kigo_handshake_sequence.svg)
 
 ** Therefore `KiGoUI` keeps track of which module draws OR the module is responsible for cleaning up. TBD
