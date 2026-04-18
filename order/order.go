@@ -46,3 +46,7 @@ type OrderChangePayload struct {
 type OrderShutdownPayload struct {
 	Reason string // reason for shutdown, e.g. when the main service is shutting down, Publish to main
 }
+
+type OrderRenderPayload struct {
+	MMAPRingBuffer 	string
+}

@@ -19,19 +19,19 @@ Orders are messages sended by KiGo and modules to the modules. The modules shoul
 Notification are messages sended by the modules to `KiGo`.
 
 - `NotificationReady` is called when the module is ready to communicate
-- `NotificationInformation` is called when an information is required
 - `NotificationUpdate` is called when an update is happened
-
-- `NotificationRender` is called to render. Send to `KiGoUI`
 
 #### NotificationUpdate
 
 Currently reasons for an update:
 - `Config` is 0 - change module configuration
 
-### Informations
+### Inquiries
 
-Informations are message which can be sended to modules to give them informations. They to not expect a reaction and are also attached to `OrderInformation`.
+- `InquiryInformation` is called when an information is required
+- `InquiryRender` is called to render. Send to `KiGoUI`
+
+Informations are message which can be sended to modules to give them knowledge about the system. They to not expect a reaction and are also attached to `OrderInformation`. They are triggered by `InquiryInformations`
 Currently reasons for an update:
 - `Modules` is 0 - receive all modules information
 - `Module` is 1 - receive information about the module with the given name or ID
@@ -44,17 +44,14 @@ Changes are messages which can be sended to modules to change the internal statu
 
 Modules are in a initiating period before they send `NotificationReady`. They can choose a heartbeat which is smaller than 24 hours or leave it empty. If empty skip everything, we assume a module which do not draw anything to `KiGoUI`
 `KiGo` response with `OrderStartUp`. From this point on a constant heartbeat is been send to make sure the module is still alive. `KiGo`and `KiGoUI` share the module informations. The heartbeat is responded by initiating communication with `KiGo` or `KiGoUI`. If the heartbeat is not responded a `OrderShutdown` is been called and, if the module has drawn, the widget of the module is been removed.
-`KiGo` accepts `NotificationInformation` and `NotificationUpdate`. `KiGoUI` accepts `NotificationRender`. The loop of heartbeat required the module to do anything, may it be to render something or any logic, instead of just aquiring resources.
+`KiGo` accepts `InquiryInformations` and `NotificationUpdate`. `KiGoUI` accepts `InquiryRender`. The loop of heartbeat required the module to do anything, may it be to render something or any logic, instead of just aquiring resources.
 
-## KiGoUI - TBD
+## KiGoUI
 
-Modules on the device can communication with `KiGoUI` is via pubsub. This keeps the latence low. Remote devices need to communicate via REST, which is implemented on Phase 5.
-`KiGoUI` is sharing with `KiGo` a list of `ModuleInformation`. `NotificationRender` is send to `KiGoUI`. For the communication with `KiGoUI` we need a number of communications to make sure the module has the exact parameters to create the image which should be render to the screen. `KiGoUI` has the informations about the screen size, the already drawn modules positions, the modules informations and the max supported refresh rate (fps). The modules needs infomationen about the screen size and the max refresh rate. The module provides than the position it should be drawn to, the images at the fps choosen. Drawn is also an update (like calling `NotificationInformation` or `NotificationUpdate`).
+Modules on the device can communication with `KiGoUI` is via pubsub, this keeps the latence low. Remote devices need to communicate via REST over `KiGo`, which is implemented on Phase 5. `KiGo` communicates to `KiGoUI` for remote modules (TBD) and for sending clean up calls. ** . `KiGoUI` only communicates to `KiGo` to refresh to signalize an interaction aka refresh the heartbeat.
+The module has the initial informations about the screen, like width, height, supported formats and max fps which it got from `OrderStartUp`. `InquiryRender` is send to `KiGoUI` in preparation for data transfer. The module gives information about where to draw, the refresh rate and the transfer method. `KiGoUI` sends a trigger to refresh the heartbeat to `KiGo` and creates a ringbuffer for this transmission. The `OrderRender` is send with the location of the ringbuffer. From this point on `KiGoUI` listen to the ringbuffer.
+The module is than sending each frame through the ringbuffer and `KiGoUI` renders it.
 
-Handshake protocol:
+![Handshake](kigo_handshake_sequence.svg)
 
-Module -> UI; I want to render on position XY with this size with this FPS.
-UI -> create ringbuffer mmap with space for 2 frames.
-UI -> Module; shares reference about ringbuffer mmap. Refreshes `ModuleInformation`. TBD
-Moudle -> Send frame via ringbuffer until finish condition is met.
-UI -> Draws frame on screen
+** Therefore `KiGoUI` keeps track of which module draws OR the module is responsible for cleaning up. TBD
