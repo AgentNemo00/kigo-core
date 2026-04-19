@@ -62,4 +62,4 @@ The whole animation is currently not saved on `KiGoUI` (TBD)
 
 ### Method
 
-Before choosing which method to use to transfer data ackknowledge the size and the throughput needed to be smooth.
+Before choosing which method to use to transfer data ackknowledge the size and the throughput needed to be smooth. Here is a table to determine the method and there limits. (TBD)
