@@ -27,6 +27,7 @@ type UIConfiguration struct {
 	ScreenWidth 		int
 	ScreenHeight 		int
 	SupportedFormats 	[]string // raw, H264, H265, Jpeg
+	SupportedChannels   []string // IPC, PubSub, REST
 	FPS 				int //max supported fps 
 }
 
