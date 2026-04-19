@@ -1,7 +1,7 @@
 package ui
 
 const (
-	IPC = iota
-	PubSub
-	REST
+	IPC = "IPC"
+	PubSub = "PubSub"
+	REST = "REST"
 )
