@@ -50,16 +50,63 @@ Modules are in a initiating period before they send `NotificationReady`. They ca
 
 ## KiGoUI
 
-Modules on the device can communication with `KiGoUI` is via pubsub, this keeps the latence low. Remote devices need to communicate via REST over `KiGo`, which is implemented on Phase 5. `KiGo` communicates to `KiGoUI` for remote modules (TBD) and for sending clean up calls. ** . `KiGoUI` only communicates to `KiGo` to refresh to signalize an interaction aka refresh the heartbeat.
+Modules on the device can communication with `KiGoUI` is via pubsub, this keeps the latence low. Remote devices need to communicate via REST over `KiGo`, which is implemented on Phase 5. `KiGo` communicates to `KiGoUI` for remote modules (**TBD**) and for sending clean up calls. ** . `KiGoUI` only communicates to `KiGo` to refresh to signalize an interaction aka refresh the heartbeat.
 The module has the initial informations about the screen, like width, height, supported formats and max fps which it got from `OrderStartUp`. `InquiryRender` is send to `KiGoUI` in preparation for data transfer. The module gives information about where to draw, the refresh rate and the transfer method. `KiGoUI` sends a trigger to refresh the heartbeat to `KiGo` and creates a ringbuffer for this transmission. The `OrderRender` is send with the location of the ringbuffer. From this point on `KiGoUI` listen to the ringbuffer.
 The module is than sending each frame through the ringbuffer and `KiGoUI` renders it.
 
-** Therefore `KiGoUI` keeps track of which module draws OR the module is responsible for cleaning up. TBD
+** Therefore `KiGoUI` keeps track of which module draws OR the module is responsible for cleaning up. **TBD**
 
 ![Handshake](assets/kigo_handshake_sequence.svg)
 
 The whole animation is currently not saved on `KiGoUI` (TBD)
 
-### Method
+### Channels
 
-Before choosing which method to use to transfer data ackknowledge the size and the throughput needed to be smooth. Here is a table to determine the method and there limits. (TBD)
+Before choosing which channels to use to transfer data ackknowledge the size and the throughput needed to be smooth.
+
+IPC -> For on device and high throuput module IPC is the standard.
+NATS -> Nats saves message to memory and has a default limit of 1 MB. Increasing the limit enabled it as channel in local network as long as encoding methods are used.
+REST -> For modules outside of the local network.
+
+### Methods
+
+KiGoUI is not responsible for ensuring a minimum fps. Here are the estimated FPS per method and channel.
+
+FullHD
+
+| Encoding Method      | IPC (Shared Mem) | PubSub (NATS) | REST (HTTP/2) | Primary Bottleneck             |
+| -------------------- | ---------------- | ------------- | ------------- | ------------------------------ |
+| RAW (RGB/YUV)        | ~300–660 fps     | ~60–120 fps   | ~30–60 fps    | Memory bandwidth               |
+| JPEG                 | ~60 fps          | ~50–60 fps    | ~25–40 fps    | JPEG VPU limit                 |
+| MJPEG (intra stream) | ~60 fps          | ~50–60 fps    | ~25–40 fps    | JPEG encoder throughput        |
+| H.264 (AVC)          | ~60 fps          | ~60 fps       | ~45–60 fps    | VPU pipeline                   |
+| H.265 (HEVC)         | ~50–60 fps       | ~50–60 fps    | ~40–55 fps    | HEVC complexity                |
+| VP8                  | ~30–60 fps       | ~30–60 fps    | ~25–45 fps    | CPU/VPU hybrid load            |
+| VP9                  | ~25–50 fps       | ~25–50 fps    | ~20–40 fps    | CPU-heavy entropy coding       |
+| AV1                  | ~10–30 fps       | ~10–25 fps    | ~10–20 fps    | Extremely high compute cost    |
+| MPEG-2 (legacy)      | ~80–120 fps      | ~60–100 fps   | ~40–80 fps    | Low efficiency, older pipeline |
+| H.264 + SVC          | ~40–60 fps       | ~40–60 fps    | ~30–50 fps    | Layered encoding overhead      |
+
+
+4K
+
+| Encoding Method | IPC (Shared Mem) | PubSub (NATS) | REST (HTTP/2) | Primary Bottleneck               |
+| --------------- | ---------------- | ------------- | ------------- | -------------------------------- |
+| RAW (RGB/YUV)   | ~60–150 fps      | ~15–40 fps    | ~8–25 fps     | Memory bandwidth explosion       |
+| JPEG            | ~20–30 fps       | ~15–25 fps    | ~10–20 fps    | JPEG VPU limit                   |
+| MJPEG           | ~20–30 fps       | ~15–25 fps    | ~10–20 fps    | JPEG pipeline saturation         |
+| H.264 (AVC)     | ~25–60 fps       | ~25–50 fps    | ~20–45 fps    | VPU macroblock processing        |
+| H.265 (HEVC)    | ~20–60 fps       | ~20–45 fps    | ~15–40 fps    | HEVC entropy + motion estimation |
+| VP8             | ~15–40 fps       | ~15–40 fps    | ~10–30 fps    | CPU + partial hardware           |
+| VP9             | ~10–35 fps       | ~10–30 fps    | ~8–25 fps     | High CPU load                    |
+| AV1             | ~5–20 fps        | ~5–15 fps     | ~5–12 fps     | Very high compute complexity     |
+| MPEG-2          | ~40–80 fps       | ~30–60 fps    | ~20–50 fps    | Inefficient but lightweight      |
+| H.264 + SVC     | ~20–50 fps       | ~20–45 fps    | ~15–40 fps    | Layered encoding overhead        |
+
+Integrated:
+
+- [ ] RAW
+- [ ] JPEG
+- [ ] MJEPG
+- [ ] H264
+- [ ] H265
