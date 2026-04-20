@@ -107,6 +107,3 @@ Integrated:
 
 - [ ] RAW
 - [ ] JPEG
-- [ ] MJEPG
-- [ ] H264
-- [ ] H265
