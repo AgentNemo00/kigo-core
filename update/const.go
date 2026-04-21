@@ -1,5 +1,6 @@
 package update
 
 const (	
-	Config = 0
+	Config = iota
+	Heartbeat
 )
