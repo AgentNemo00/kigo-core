@@ -108,3 +108,7 @@ Integrated:
 
 - [ ] RAW
 - [ ] JPEG
+
+### Protocol
+
+The protocol for the data transmission is simple. The first 32 bytes are indicating the size of the frame, than the frame.
