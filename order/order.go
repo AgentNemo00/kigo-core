@@ -1,5 +1,7 @@
 package order
 
+import "time"
+
 // Messages send to the modules.
 
 type Order struct {
@@ -49,5 +51,5 @@ type OrderShutdownPayload struct {
 }
 
 type OrderRenderPayload struct {
-	MMAPRingBuffer 	string
+	ChannelName 	string
 }
