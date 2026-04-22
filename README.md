@@ -21,6 +21,7 @@ Notification are messages sended by the modules to `KiGo`.
 
 - `NotificationReady` is called when the module is ready to communicate
 - `NotificationUpdate` is called when an update is happened
+- `NotificationShutdown` is called when the module shuts down themself
 
 #### NotificationUpdate
 
