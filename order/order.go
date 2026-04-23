@@ -1,7 +1,5 @@
 package order
 
-import "time"
-
 // Messages send to the modules.
 
 type Order struct {
