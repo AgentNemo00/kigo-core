@@ -10,9 +10,6 @@ type InquiryInformationPayload struct {
 }
 
 type InquiryRenderPayload struct {
-	PositionX 		int 	// Position X
-	PositionY 		int 	// Position Y
-
 	Format 			string 	// Format choosen, e.g. raw, H264, H265, Jpeg
 	Channel     	string 	// IPC, PubSub, REST
 

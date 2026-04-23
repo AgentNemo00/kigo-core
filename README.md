@@ -111,4 +111,6 @@ Integrated:
 
 ### Protocol
 
-The protocol for the data transmission is simple. The first 32 bytes are indicating the size of the frame, than the frame.
+The protocol for the data transmission is simple. Every frame send has a header before the frame data begins.
+
+First two times 16 bytes (uint16) to determine the position, than 32 bytes are indicating the size of the frame (uint32), than the frame.
