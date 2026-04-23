@@ -7,4 +7,7 @@ const (
 	KiGoIDInvalid
 	ModuleNotFound
 	Unsupported
+	Timeout
+	Channel
+	Internal
 )
