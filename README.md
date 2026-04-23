@@ -38,6 +38,7 @@ Currently reasons for an update:
 Currently reasons for an inquiry:
 - `Modules` is 0 - receive all modules information
 - `Module` is 1 - receive information about the module with the given name or ID
+- `Screen` is 2 - information about the screen
 
 ### Changes
 

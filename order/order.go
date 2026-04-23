@@ -49,5 +49,7 @@ type OrderShutdownPayload struct {
 }
 
 type OrderRenderPayload struct {
+	SizeX			int
+	SizeY			int
 	ChannelName 	string
 }
