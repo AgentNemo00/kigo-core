@@ -6,14 +6,14 @@ Pubsub shema for communication with `KiGo` and `KiGoUI`.
 
 ### Orders
 
-Orders are messages sended by KiGo and modules to the modules. The modules should react to them.
+Orders are messages sended to the modules to the modules. The modules should react to them.
 
 - `OrderStartUp` is called after receiving the notification `NotificationReady` from the module and gives the module basic information about the current state of KiGo
 - `OrderError` is called when an error occurs on the KiGo side which is caused by the module
 - `OrderInformation` is called when an update is send which contains information about the general system
 - `OrderChange` is called when an update is send to change the module
 - `OrderShutdown` should free up the resources and shutdown
-- `OrderRender` render to the location
+- `OrderRender` render to the location 
 
 ### Notifications
 
@@ -30,15 +30,15 @@ Currently reasons for an update:
 
 ### Inquiries
 
-- `InquiryInformation` is called when an information is required, responded with `OrderInformation`
+- `InquiryInformation` is called when an information is required, responded with `OrderInformation` by `KiGo`and `KiGoUI`
 - `InquiryRender` is called to render. Send to `KiGoUI`, responded with `OrderRender`
 
 #### InquiryInformations
 
 Currently reasons for an inquiry:
-- `Modules` is 0 - receive all modules information
-- `Module` is 1 - receive information about the module with the given name or ID
-- `Screen` is 2 - information about the screen
+- `Modules` is 0 - receive all modules information - **provided by KiGo**
+- `Module` is 1 - receive information about the module with the given name or ID - **provided by KiGo**
+- `Screen` is 2 - information about the screen - **provided by KiGoUI**
 
 ### Changes
 
@@ -52,23 +52,20 @@ Modules are in a initiating period before they send `NotificationReady`. They ca
 
 ## KiGoUI
 
-Modules on the device can communication with `KiGoUI` is via pubsub, this keeps the latence low. Remote devices need to communicate via REST over `KiGo`, which is implemented on Phase 5. `KiGo` communicates to `KiGoUI` for remote modules (**TBD**) and for sending clean up calls. ** . `KiGoUI` only communicates to `KiGo` to refresh to signalize an interaction aka refresh the heartbeat.
+Modules on the device can communication with `KiGoUI` is via pubsub, this keeps the latence low. Remote devices need to communicate via REST over `KiGo`, which is implemented on Phase 5. `KiGoUI` only communicates to `KiGo` to refresh to signalize an interaction aka refresh the heartbeat.
 The module has the initial informations about the screen, like width, height, supported formats and max fps which it got from `OrderStartUp`. `InquiryRender` is send to `KiGoUI` in preparation for data transfer. The module gives information about where to draw, the refresh rate and the transfer method. `KiGoUI` sends a trigger to refresh the heartbeat to `KiGo` and creates a ringbuffer for this transmission. The `OrderRender` is send with the location of the ringbuffer. From this point on `KiGoUI` listen to the ringbuffer.
 The module is than sending each frame through the ringbuffer and `KiGoUI` renders it.
 
-** Therefore `KiGoUI` keeps track of which module draws OR the module is responsible for cleaning up. **TBD**
-
 ![Handshake](assets/kigo_handshake_sequence.svg)
 
-The whole animation is currently not saved on `KiGoUI` (TBD)
 
 ### Channels
 
 Before choosing which channels to use to transfer data ackknowledge the size and the throughput needed to be smooth.
 
-IPC -> For on device and high throuput module IPC is the standard.
-NATS -> Nats saves message to memory and has a default limit of 1 MB. Increasing the limit enabled it as channel in local network as long as encoding methods are used.
-REST -> For modules outside of the local network.
+- [X] IPC -> For on device and high throuput module IPC is the standard.
+- [X] NATS -> Nats saves message to memory and has a default limit of 1 MB. Increasing the limit enabled it as channel in local network as long as encoding methods are used.
+- [ ] REST -> For modules outside of the local network.
 
 ### Methods
 
@@ -114,4 +111,9 @@ Integrated:
 
 The protocol for the data transmission is simple. Every frame send has a header before the frame data begins.
 
-First two times 16 bytes (uint16) to determine the position, than 32 bytes are indicating the size of the frame (uint32), than the frame.
+#### Header
+
+2 bytes - Position X
+2 bytes - Position Y
+4 bytes - Size in bytes
+N bytes - Frame
