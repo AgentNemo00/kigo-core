@@ -24,8 +24,8 @@ type MessageTo struct {
 }
 
 type UIConfiguration struct {
-	ScreenWidth 		int
-	ScreenHeight 		int
+	ScreenWidth 		int // absolute screen width
+	ScreenHeight 		int // absolute screen height
 	SupportedFormats 	[]string // raw, H264, H265, Jpeg
 	SupportedChannels   []string // IPC, PubSub, REST
 	FPS 				int //max supported fps 
@@ -49,7 +49,8 @@ type OrderShutdownPayload struct {
 }
 
 type OrderRenderPayload struct {
-	SizeX			int
-	SizeY			int
+	ScreenWidth		int        	// max screen width 
+	ScreenHeight	int			// max screen height
+	MaxFrameSize 	int 		// max frame size
 	ChannelName 	string
 }
