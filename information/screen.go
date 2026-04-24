@@ -1,7 +1,7 @@
 package information
 
 type Window struct {
-	SizeX	int
-	SizeY	int
+	Width	int
+	Height	int
 	MaxFPS  int
 }
