@@ -52,12 +52,18 @@ Modules are in a initiating period before they send `NotificationReady`. They ca
 
 ## KiGoUI
 
-Modules on the device can communication with `KiGoUI` is via pubsub, this keeps the latence low. Remote devices need to communicate via REST over `KiGo`, which is implemented on Phase 5. `KiGoUI` only communicates to `KiGo` to refresh to signalize an interaction aka refresh the heartbeat.
+Modules on the device can communication with `KiGoUI` is via pubsub, this keeps the latence low. Remote devices need to communicate via REST over `KiGo`, which is implemented on Phase 5. `KiGoUI` only communicates to `KiGo` to refresh the heartbeat of the module.
 The module has the initial informations about the screen, like width, height, supported formats and max fps which it got from `OrderStartUp`. `InquiryRender` is send to `KiGoUI` in preparation for data transfer. The module gives information about where to draw, the refresh rate and the transfer method. `KiGoUI` sends a trigger to refresh the heartbeat to `KiGo` and creates a ringbuffer for this transmission. The `OrderRender` is send with the location of the ringbuffer. From this point on `KiGoUI` listen to the ringbuffer.
 The module is than sending each frame through the ringbuffer and `KiGoUI` renders it.
 
 ![Handshake](assets/kigo_handshake_sequence.svg)
 
+- 1 - Ask for channel and render option
+- 2 - `KiGoUI` refreshes heartbeat
+- 3 - Ringbuffer is created
+- 4 - Channel and render options are sended back
+- 5 - Listens to channel
+- 6 - renders whatever is send
 
 ### Channels
 
@@ -111,9 +117,4 @@ Integrated:
 
 The protocol for the data transmission is simple. Every frame send has a header before the frame data begins.
 
-#### Header
-
-2 bytes - Position X
-2 bytes - Position Y
-4 bytes - Size in bytes
-N bytes - Frame
+![Handshake](assets/protocol.png)
