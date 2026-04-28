@@ -81,7 +81,7 @@ FullHD
 
 | Encoding Method      | IPC (Shared Mem) | PubSub (NATS) | REST (HTTP/2) | Primary Bottleneck             |
 | -------------------- | ---------------- | ------------- | ------------- | ------------------------------ |
-| RAW (RGB/YUV)        | ~300–660 fps     | ~60–120 fps   | ~30–60 fps    | Memory bandwidth               |
+| RAW (RGBA/YUV)        | ~300–660 fps     | ~60–120 fps   | ~30–60 fps    | Memory bandwidth               |
 | JPEG                 | ~60 fps          | ~50–60 fps    | ~25–40 fps    | JPEG VPU limit                 |
 | MJPEG (intra stream) | ~60 fps          | ~50–60 fps    | ~25–40 fps    | JPEG encoder throughput        |
 | H.264 (AVC)          | ~60 fps          | ~60 fps       | ~45–60 fps    | VPU pipeline                   |
@@ -97,7 +97,7 @@ FullHD
 
 | Encoding Method | IPC (Shared Mem) | PubSub (NATS) | REST (HTTP/2) | Primary Bottleneck               |
 | --------------- | ---------------- | ------------- | ------------- | -------------------------------- |
-| RAW (RGB/YUV)   | ~60–150 fps      | ~15–40 fps    | ~8–25 fps     | Memory bandwidth explosion       |
+| RAW (RGBA/YUV)   | ~60–150 fps      | ~15–40 fps    | ~8–25 fps     | Memory bandwidth explosion       |
 | JPEG            | ~20–30 fps       | ~15–25 fps    | ~10–20 fps    | JPEG VPU limit                   |
 | MJPEG           | ~20–30 fps       | ~15–25 fps    | ~10–20 fps    | JPEG pipeline saturation         |
 | H.264 (AVC)     | ~25–60 fps       | ~25–50 fps    | ~20–45 fps    | VPU macroblock processing        |
