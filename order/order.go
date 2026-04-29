@@ -43,5 +43,6 @@ type OrderRenderPayload struct {
 	ScreenWidth		int        	// max screen width 
 	ScreenHeight	int			// max screen height
 	MaxFrameSize 	int 		// max frame size
-	ChannelName 	string
+	ChannelName 	string     	// channel name to use for transmission
+	ObjectID        uint32      // objectID to use 
 }
