@@ -117,4 +117,4 @@ Integrated:
 
 The protocol for the data transmission is simple. Every frame send has a header before the frame data begins.
 
-![Handshake](assets/protocolv2.png)
+![Handshake](assets/protocolv3.png)
