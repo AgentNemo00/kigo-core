@@ -18,4 +18,6 @@ type InquiryRenderPayload struct {
 
 	MaxFrameSize 	int // max frame size, i.e. custom size, FullHD, 4K, in pixel. If zero, width*height is used. if it exceed screens maximum, it is croped.
 	Timeout 		time.Duration // Duration to context timeout on receiver site while waiting for new data. Max should be 1sec/FPS
+
+	ObjectID        int // uint32 id of the object to manipulate which already exist, if none given a new one is generated
 }	
