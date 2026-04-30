@@ -1,14 +1,20 @@
 package util
 
-import "context"
+import (
+	"context"
+	"fmt"
+)
 
-func WaitingWithContext(ctx context.Context, fn func() error) error {
+func WaitingWithContext[T any](ctx context.Context, ch chan T) (*T, error) {
 	for {
 		select {
 			case <- ctx.Done():
-				return ctx.Err()
-			default:
-				return fn()
+				return nil, ctx.Err()
+			case value, ok := <-ch:
+				if !ok {
+					return nil, fmt.Errorf("channel closed")
+				}
+				return &value, nil
 		}
 	}
 }
