@@ -10,3 +10,15 @@ type ScreenPayload struct {
 	Height	int
 	MaxFPS  int
 }
+
+type PositionPayload struct {
+	X int
+	Y int
+}
+
+type AreaPayload struct {
+	X int
+	Y int
+	Width int
+	Height int
+}
