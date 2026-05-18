@@ -5,6 +5,6 @@ const (
 	Module
 	UI
 	Screen
-	Position
+	Point
 	Area
 )

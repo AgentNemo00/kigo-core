@@ -11,12 +11,19 @@ type ScreenPayload struct {
 	MaxFPS  int
 }
 
-type PositionPayload struct {
+type PointPayload struct {
 	X int
 	Y int
 }
 
 type AreaPayload struct {
+	X int
+	Y int
+	Width int
+	Height int
+}
+
+type OverlapingResponse struct {
 	X int
 	Y int
 	Width int
