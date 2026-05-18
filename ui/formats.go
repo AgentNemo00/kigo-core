@@ -2,7 +2,7 @@ package ui
 
 const (
 	RAW = "RAW"
+	PNG = "PNG"
 	JPEG = "JPEG"
-	H264 = "H264"
-	H265 = "H265"
+	"LZ4" = "LZ4"
 )
