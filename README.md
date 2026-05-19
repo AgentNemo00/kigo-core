@@ -73,45 +73,36 @@ Before choosing which channels to use to transfer data ackknowledge the size and
 - [X] NATS -> Nats saves message to memory and has a default limit of 1 MB. Increasing the limit enabled it as channel in local network as long as encoding methods are used.
 - [ ] REST -> For modules outside of the local network.
 
-### Methods
+### Formats
 
-KiGoUI is not responsible for ensuring a minimum fps. Here are the estimated FPS per method and channel.
+KiGoUI is not responsible for ensuring a minimum fps. Here are the estimated FPS per format and channel.
 
 FullHD
 
-| Encoding Method      | IPC (Shared Mem) | PubSub (NATS) | REST (HTTP/2) | Primary Bottleneck             |
-| -------------------- | ---------------- | ------------- | ------------- | ------------------------------ |
-| RAW (RGBA/YUV)        | ~300–660 fps     | ~60–120 fps   | ~30–60 fps    | Memory bandwidth               |
-| JPEG                 | ~60 fps          | ~50–60 fps    | ~25–40 fps    | JPEG VPU limit                 |
-| MJPEG (intra stream) | ~60 fps          | ~50–60 fps    | ~25–40 fps    | JPEG encoder throughput        |
-| H.264 (AVC)          | ~60 fps          | ~60 fps       | ~45–60 fps    | VPU pipeline                   |
-| H.265 (HEVC)         | ~50–60 fps       | ~50–60 fps    | ~40–55 fps    | HEVC complexity                |
-| VP8                  | ~30–60 fps       | ~30–60 fps    | ~25–45 fps    | CPU/VPU hybrid load            |
-| VP9                  | ~25–50 fps       | ~25–50 fps    | ~20–40 fps    | CPU-heavy entropy coding       |
-| AV1                  | ~10–30 fps       | ~10–25 fps    | ~10–20 fps    | Extremely high compute cost    |
-| MPEG-2 (legacy)      | ~80–120 fps      | ~60–100 fps   | ~40–80 fps    | Low efficiency, older pipeline |
-| H.264 + SVC          | ~40–60 fps       | ~40–60 fps    | ~30–50 fps    | Layered encoding overhead      |
+| Encoding       | IPC (Shared Memory) | PubSub (NATS) | REST (HTTP/2) | Main Bottleneck                          |
+| -------------- | ------------------: | ------------: | ------------: | ---------------------------------------- |
+| RAW (RGBA/YUV) |        ~300–660 fps |   ~60–120 fps |    ~30–60 fps | Memory bandwidth + copy overhead         |
+| LZ4 (lossless) |        ~180–450 fps |   ~50–110 fps |    ~25–55 fps | Memory throughput + decompression copies |
+| PNG (lossless) |          ~15–40 fps |    ~10–30 fps |     ~8–20 fps | CPU-heavy DEFLATE compression            |
+| JPEG           |         ~60–120 fps |    ~50–90 fps |    ~25–50 fps | JPEG encoder/decoder throughput          |
 
 
 4K
 
-| Encoding Method | IPC (Shared Mem) | PubSub (NATS) | REST (HTTP/2) | Primary Bottleneck               |
-| --------------- | ---------------- | ------------- | ------------- | -------------------------------- |
-| RAW (RGBA/YUV)   | ~60–150 fps      | ~15–40 fps    | ~8–25 fps     | Memory bandwidth explosion       |
-| JPEG            | ~20–30 fps       | ~15–25 fps    | ~10–20 fps    | JPEG VPU limit                   |
-| MJPEG           | ~20–30 fps       | ~15–25 fps    | ~10–20 fps    | JPEG pipeline saturation         |
-| H.264 (AVC)     | ~25–60 fps       | ~25–50 fps    | ~20–45 fps    | VPU macroblock processing        |
-| H.265 (HEVC)    | ~20–60 fps       | ~20–45 fps    | ~15–40 fps    | HEVC entropy + motion estimation |
-| VP8             | ~15–40 fps       | ~15–40 fps    | ~10–30 fps    | CPU + partial hardware           |
-| VP9             | ~10–35 fps       | ~10–30 fps    | ~8–25 fps     | High CPU load                    |
-| AV1             | ~5–20 fps        | ~5–15 fps     | ~5–12 fps     | Very high compute complexity     |
-| MPEG-2          | ~40–80 fps       | ~30–60 fps    | ~20–50 fps    | Inefficient but lightweight      |
-| H.264 + SVC     | ~20–50 fps       | ~20–45 fps    | ~15–40 fps    | Layered encoding overhead        |
+| Encoding       | IPC (Shared Memory) | PubSub (NATS) | REST (HTTP/2) | Main Bottleneck                    |
+| -------------- | ------------------: | ------------: | ------------: | ---------------------------------- |
+| RAW (RGBA/YUV) |         ~60–150 fps |    ~15–40 fps |     ~8–25 fps | Massive memory bandwidth pressure  |
+| LZ4 (lossless) |         ~40–120 fps |    ~15–35 fps |     ~8–20 fps | Memory bandwidth + packet transfer |
+| PNG (lossless) |           ~4–15 fps |     ~3–10 fps |      ~2–8 fps | Extreme CPU + memory load          |
+| JPEG           |          ~20–60 fps |    ~15–45 fps |    ~10–30 fps | JPEG hardware/software pipeline    |
+
 
 Integrated:
 
-- [ ] RAW
-- [ ] JPEG
+- [X] RAW
+- [X] JPEG
+- [X] PNG
+- [ ] LZ4
 
 ### Protocol
 
