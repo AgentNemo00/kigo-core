@@ -30,6 +30,6 @@ type OverlapingResponse struct {
 	Height int
 }
 
-type RemovePayload struct {
-	UUIID uint32
+type RemoveElementsPayload struct {
+	ID string
 }
