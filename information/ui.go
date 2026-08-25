@@ -31,5 +31,5 @@ type OverlapingResponse struct {
 }
 
 type RemovePayload struct {
-	UUIID string
+	UUIID uint32
 }
