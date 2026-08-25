@@ -7,5 +7,5 @@ const (
 	OrderInformation 	= "OrderInformation" 
 	OrderChange			= "OrderChange" 
 	OrderShutdown		= "OrderShutdown" 
-	OrderRender			= "OrderRender" 
+	OrderRender			= "OrderRender" 	
 )
