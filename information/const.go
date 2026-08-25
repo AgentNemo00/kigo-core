@@ -7,5 +7,4 @@ const (
 	Screen
 	Point
 	Area
-	Remove
 )

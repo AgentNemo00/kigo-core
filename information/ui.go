@@ -29,7 +29,3 @@ type OverlapingResponse struct {
 	Width int
 	Height int
 }
-
-type RemoveElementsPayload struct {
-	ID string
-}
