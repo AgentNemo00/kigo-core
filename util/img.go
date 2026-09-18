@@ -28,10 +28,10 @@ func FromBytes(id int, positionX, positionY, width, height int, length int, data
 	return FromBytesSigned(uint32(id), uint16(positionX), uint16(positionY), uint16(width), uint16(height), uint32(length), data)
 }
 
-func Command(id uint32, cmd uint16) []byte {
+func Command(id int, cmd int) []byte {
 	buffer := make([]byte, 0)
-	buffer = append(buffer, Uint32ToBytesBE(id)...)
-	buffer = append(buffer, Uint16ToBytesBE(cmd)...)
+	buffer = append(buffer, Uint32ToBytesBE(uint32(id))...)
+	buffer = append(buffer, Uint16ToBytesBE(uint16(cmd))...)
 	buffer = append(buffer, Uint16ToBytesBE(0)...)
 	buffer = append(buffer, Uint16ToBytesBE(0)...)
 
