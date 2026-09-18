@@ -2,6 +2,8 @@ package util
 
 import (
 	"image"
+
+	"github.com/AgentNemo00/kigo-core/wire"
 )
 
 func FromRGBA(id uint32, positionX, positionY uint16, img *image.RGBA) []byte {
@@ -11,6 +13,7 @@ func FromRGBA(id uint32, positionX, positionY uint16, img *image.RGBA) []byte {
 func FromBytesSigned(id uint32, positionX, positionY, width, height uint16, length uint32, data []byte) []byte {
 	buffer := make([]byte, 0)
 	buffer = append(buffer, Uint32ToBytesBE(id)...)
+	buffer = append(buffer, Uint16ToBytesBE(wire.None)...)
 	buffer = append(buffer, Uint16ToBytesBE(positionX)...)
 	buffer = append(buffer, Uint16ToBytesBE(positionY)...)
 
@@ -23,4 +26,17 @@ func FromBytesSigned(id uint32, positionX, positionY, width, height uint16, leng
 
 func FromBytes(id int, positionX, positionY, width, height int, length int, data []byte) []byte {
 	return FromBytesSigned(uint32(id), uint16(positionX), uint16(positionY), uint16(width), uint16(height), uint32(length), data)
+}
+
+func Command(id uint32, cmd uint16) []byte {
+	buffer := make([]byte, 0)
+	buffer = append(buffer, Uint32ToBytesBE(id)...)
+	buffer = append(buffer, Uint16ToBytesBE(cmd)...)
+	buffer = append(buffer, Uint16ToBytesBE(0)...)
+	buffer = append(buffer, Uint16ToBytesBE(0)...)
+
+	buffer = append(buffer, Uint16ToBytesBE(0)...)
+	buffer = append(buffer, Uint16ToBytesBE(0)...)
+	buffer = append(buffer, Uint32ToBytesBE(0)...)
+	return buffer
 }
