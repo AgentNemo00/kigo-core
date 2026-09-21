@@ -49,6 +49,9 @@ Changes are messages which can be sended to modules to change the internal statu
 Wire are commands to leverage the capabilities of the protocoll. It handles clearing the object and closing the connection.
 The default is None (00).
 
+- Clear (01) - removes the object from the screen
+- Close (02) - closes the transmission
+
 ## Module lifecycle
 
 Modules are in a initiating period before they send `NotificationReady`. They can choose a heartbeat which is smaller than 24 hours or leave it empty. If empty skip everything, we assume a module which do not draw anything to `KiGoUI`
