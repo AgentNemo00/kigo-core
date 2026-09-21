@@ -44,6 +44,11 @@ Currently reasons for an inquiry:
 
 Changes are messages which can be sended to modules to change the internal status. They are attached to `OrderChanges`. They cause a change in the state of the module which causes a redraw.
 
+### Wire
+
+Wire are commands to leverage the capabilities of the protocoll. It handles clearing the object and closing the connection.
+The default is None (00).
+
 ## Module lifecycle
 
 Modules are in a initiating period before they send `NotificationReady`. They can choose a heartbeat which is smaller than 24 hours or leave it empty. If empty skip everything, we assume a module which do not draw anything to `KiGoUI`
@@ -108,4 +113,4 @@ Integrated:
 
 The protocol for the data transmission is simple. Every frame send has a header before the frame data begins.
 
-![Handshake](assets/protocolv3.png)
+![Handshake](assets/protocol_v3.png)
