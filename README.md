@@ -49,8 +49,9 @@ Changes are messages which can be sended to modules to change the internal statu
 Wire are commands to leverage the capabilities of the protocoll. It handles clearing the object and closing the connection.
 The default is None (00).
 
-- Clear (01) - removes the object from the screen
-- Close (02) - closes the transmission
+- Clear (01)    - removes the object from the screen
+- Close (02)    - closes the transmission
+- Update (03)   - updates the image (blit) instead of replacing it
 
 ## Module lifecycle
 
